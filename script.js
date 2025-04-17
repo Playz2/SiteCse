@@ -5,9 +5,9 @@ window.addEventListener("scroll", () => {
   const currentScroll = window.pageYOffset;
 
   if (currentScroll > lastScroll) {
-    nav.style.top = "-120px"; // Hide
+    nav.style.top = "-120px"; 
   } else {
-    nav.style.top = "0"; // Show
+    nav.style.top = "0";
   }
 
   lastScroll = currentScroll;
