@@ -507,6 +507,266 @@ body{
   z-index: 5;
   background-color: #3285DA;
 }
+.evenimente {
+  padding: 40px 20px;
+  margin-top: 100px;
+  min-height: 70vh;
+  position: relative;
+  overflow: hidden;
+  background-image: url("sa.PNG");
+  background-size: cover;    
+  background-position: center center;  
+  background-repeat: no-repeat; 
+}
+.evenimente::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.evenimente > * {
+  position: relative;
+  z-index: 2;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 48px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  color: #e9e9e9;
+  z-index: 5;
+}
+
+.list {
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  width: 100%;
+  max-width: 2000px; 
+  min-height: 1000px; 
+  z-index: 2;
+  padding-top: 300px;
+}
+
+.list li {
+  list-style-type: none;
+  width: 480px; 
+  min-height: 480px; 
+  background: #ffffff;
+  color: rgb(0, 0, 0);
+  position: absolute;
+  left: 50%;
+  margin-left: -240px; 
+  border-radius: 15px; 
+  padding: 25px; 
+  text-align: left;
+  opacity: 0.25;
+  transition: transform 1s, opacity 1s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+}
+
+.list li h3 {
+  font-size: 32px; 
+  margin-bottom: 24px; 
+  line-height: 1.3;
+}
+
+.list li p {
+  font-size: 18px; 
+  margin: 8px 0; 
+  line-height: 1.5;
+}
+
+.list .act {
+  opacity: 1;
+  z-index: 5;
+}
+
+.list .prev {
+  transform: translateX(-400px) scale(0.85); 
+  cursor: pointer;
+  z-index: 4;
+}
+
+.list .next {
+  transform: translateX(400px) scale(0.85); 
+  cursor: pointer;
+  z-index: 4;
+}
+
+.list .hide {
+  transform: translateX(-850px) scale(0.8); 
+  opacity: 0;
+  z-index: 1;
+}
+
+.list .new-next {
+  transform: translateX(880px) scale(0.8); 
+  opacity: 0;
+  z-index: 1;
+}
+
+.swipe {
+  width: 480px; 
+  height: 480px; 
+  position: absolute;
+  background-color: transparent;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+#calendar-container {
+  font-family: "Itim", sans-serif;
+  max-width: 800px;
+  margin: 40px auto;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  background-color: #519CED; /* Match your site's blue */
+  color: white;
+}
+
+#calendar-month-year {
+  font-size: 28px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.calendar-nav-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.calendar-nav-btn:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background-color: #9ECEFF; /* Lighter blue */
+  color: #0f0f0f;
+  text-align: center;
+  font-weight: bold;
+  padding: 12px 0;
+  font-size: 16px;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 2px;
+  background-color: #e9ecef;
+  padding: 2px;
+}
+
+.day {
+  height: 50px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  font-size: 16px;
+}
+
+.day:hover {
+  background-color: #d1ecff;
+}
+
+.day.empty {
+  background-color: #f8f9fa;
+  cursor: default;
+}
+
+.day.has-event {
+  color: #0f0f0f;
+  font-weight: bold;
+}
+
+.day.has-event::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: #519CED;
+  border-radius: 50%;
+}
+
+.day.active {
+  background-color: #519CED;
+  color: white;
+}
+
+.day.today {
+  background-color: #e9f4ff;
+  box-shadow: inset 0 0 0 2px #519CED;
+  font-weight: bold;
+}
+
+.calendar-event-details {
+  padding: 20px;
+  background-color: white;
+  border-top: 3px solid #9ECEFF;
+  min-height: 100px;
+}
+
+.calendar-event-details h3 {
+  color: #0f0f0f;
+  font-size: 22px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.calendar-event {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #e9f4ff; /* Match the light blue in your design */
+  border-left: 5px solid #519CED;
+  border-radius: 8px;
+}
+
+.calendar-event h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #2F2F2F;
+  font-size: 18px;
+}
+
+.calendar-event p {
+  margin: 8px 0;
+  font-size: 16px;
+  color: #0f0f0f;
+}
 
   /* Mobile-friendly layout */
   @media (max-width: 768px) {
@@ -656,5 +916,123 @@ body{
     left: auto;
     position: relative;
     margin: 20px auto;
+  }
+  .list .prev {
+    transform: translateX(-250px) scale(0.85);
+  }
+
+  .list .next {
+    transform: translateX(250px) scale(0.85);
+  }
+}
+#calendar-container {
+  margin: 20px 10px;
+  max-width: none;
+}
+
+.calendar-header {
+  padding: 12px;
+}
+
+#calendar-month-year {
+  font-size: 22px;
+}
+
+.days {
+  grid-gap: 1px;
+}
+
+.day {
+  height: 40px;
+  font-size: 14px;
+}
+
+.weekdays {
+  font-size: 14px;
+}
+
+.calendar-event-details {
+  padding: 15px;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+
+  .list {
+    min-height: 360px;
+  }
+
+  .list li {
+    width: 340px;
+    min-height: 340px;
+    margin-left: -170px;
+    padding: 20px;
+  }
+
+  .list .prev {
+    transform: translateX(-200px) scale(0.8);
+  }
+
+  .list .next {
+    transform: translateX(200px) scale(0.8);
+  }
+
+  .swipe {
+    width: 340px;
+    height: 340px;
+  }
+}
+
+@media (max-width: 480px) {
+  .evenimente {
+    padding: 80px 15px;
+  }
+
+  .section-title {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+
+  .list {
+    min-height: 320px;
+  }
+
+  .list li {
+    width: 280px;
+    min-height: 320px;
+    margin-left: -140px;
+    padding: 15px;
+  }
+
+  .list li h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .list li p {
+    font-size: 16px;
+    margin: 6px 0;
+  }
+
+  .list .prev {
+    transform: translateX(-150px) scale(0.8);
+    opacity: 0.2;
+  }
+
+  .list .next {
+    transform: translateX(150px) scale(0.8);
+    opacity: 0.2; 
+  }
+
+  .list .hide, .list .new-next {
+    transform: translateX(-400px) scale(0.7);
+  }
+  
+  .swipe {
+    width: 280px;
+    height: 320px;
   }
   }

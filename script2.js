@@ -19,10 +19,10 @@ document.addEventListener("DOMContentLoaded", function () {
   
     function startDebateAutoScroll() {
       clearInterval(debateInterval);
-      debateInterval = setInterval(nextDebateSlide, 3000); // Change slides every 3 seconds
+      debateInterval = setInterval(nextDebateSlide, 3000);
     }
   
-    // Initialize the slider
+
     showDebateSlide(0);
     startDebateAutoScroll();
   });
