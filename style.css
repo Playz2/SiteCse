@@ -4,7 +4,7 @@ body{
     margin: 0;
     padding: 0;
     font-family: "Itim", sans-serif;
-    background-color: #9ECEFF;
+    background: linear-gradient(135deg, #9ECEFF, #B4E0FF, #7ACDFF);
 }
 
 
@@ -668,7 +668,7 @@ body{
 .weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  background-color: #9ECEFF; /* Lighter blue */
+  background-color: #9ECEFF; 
   color: #0f0f0f;
   text-align: center;
   font-weight: bold;
@@ -750,7 +750,7 @@ body{
 .calendar-event {
   margin-bottom: 20px;
   padding: 15px;
-  background-color: #e9f4ff; /* Match the light blue in your design */
+  background-color: #e9f4ff;
   border-left: 5px solid #519CED;
   border-radius: 8px;
 }
@@ -766,6 +766,107 @@ body{
   margin: 8px 0;
   font-size: 16px;
   color: #0f0f0f;
+}
+
+.footer {
+  background-image: url("footer1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+
+  display: flex;
+  justify-content: space-between;
+  padding: 140px 40px 80px; /* ⬅️ Increased top padding, decreased bottom */
+  align-items: flex-start;
+  flex-wrap: wrap;
+
+  font-family: 'Segoe UI', sans-serif;
+  text-align: left;
+  position: relative;
+}
+
+.footer-logo {
+  width: 150px;
+  margin: 40px 0 20px; 
+  border-radius: 50%;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+  flex: 1;
+  min-width: 220px;
+  margin: 80px 20px 0; 
+}
+.footer-center{
+  margin-right: 850px;
+}
+
+.footer-left h4 {
+  margin: 0 0 55px;
+  font-size: 24px;
+}
+.footer-center h4{
+  font-size: 54px;
+  margin-bottom: 20px;
+}
+.footer-center p {
+  font-size: 18px;
+  margin: 10px 0;
+  line-height: 1.6;
+}
+.footer-right h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.footer-right {
+  margin-top: 250px;
+}
+.footer a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.social-icons a img {
+  width: 36px;
+  height: 36px;
+  transition: transform 0.3s ease;
+}
+
+.social-icons a img:hover {
+  transform: scale(1.1);
+}
+.footer-bottom {
+  width: 100%;
+  text-align: center;
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 14px;
+  color: #fff;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom a:hover {
+  color: #5582ff;
+  text-decoration: underline;
 }
 
   /* Mobile-friendly layout */
@@ -925,35 +1026,36 @@ body{
     transform: translateX(250px) scale(0.85);
   }
 }
-#calendar-container {
-  margin: 20px 10px;
-  max-width: none;
-}
-
-.calendar-header {
-  padding: 12px;
-}
-
-#calendar-month-year {
-  font-size: 22px;
-}
-
-.days {
-  grid-gap: 1px;
-}
-
-.day {
-  height: 40px;
-  font-size: 14px;
-}
-
-.weekdays {
-  font-size: 14px;
-}
-
-.calendar-event-details {
-  padding: 15px;
-}
+  #calendar-container {
+    margin: 20px 10px;
+    max-width: none;
+    margin-bottom: 100px;
+  }
+  
+  .calendar-header {
+    padding: 12px;
+  }
+  
+  #calendar-month-year {
+    font-size: 22px;
+  }
+  
+  .days {
+    grid-gap: 1px;
+  }
+  
+  .day {
+    height: 40px;
+    font-size: 14px;
+  }
+  
+  .weekdays {
+    font-size: 14px;
+  }
+  
+  .calendar-event-details {
+    padding: 15px;
+  }
 
 @media (max-width: 768px) {
   .section-title {
