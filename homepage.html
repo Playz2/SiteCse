@@ -11,16 +11,20 @@
     <link rel="icon" type="image/jpg" href="314709874_848509063084706_779049845709128952_n.jpg" />
   </head>
 <body>
-    <nav class="main-nav">
-        <img src="314709874_848509063084706_779049845709128952_n.jpg" alt="Logo" class="logo" />
-        <a href="#about" class="nav-link">About</a>
-        <a href="#members" class="nav-link">Members</a>
-        <a href="#evenimente" class="nav-link">Evenimente</a>
-        <a href="#calendar" class="nav-link">Calendar</a>
-        <a href="#cluburi" class="nav-link">Club-uri</a>
-      </nav>
+  <nav class="main-nav">
+    <div class="nav-left">
+      <img src="314709874_848509063084706_779049845709128952_n.jpg" alt="Logo" class="logo" />
+    </div>
+    <div class="nav-links">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#members" class="nav-link">Members</a>
+      <a href="#evenimente" class="nav-link">Evenimente</a>
+      <a href="#calendar" class="nav-link">Calendar</a>
+      <a href="#cluburi" class="nav-link">Club-uri</a>
+    </div>
+  </nav>
 
-      <section class="liceu">
+      <section id="home" class="liceu">
         <div class="container">
           <div class="gradient"></div>
           <img src="Screenshot 2025-04-15 195448.png" alt="liceu" class="liceu-image" />
@@ -30,7 +34,7 @@
           </a>
         </div>
       </section>
-      <section class="cine">
+      <section id="about" class="cine">
         <div class="container1">
           <div class="text-content">
             <h2>Cine suntem?</h2>
@@ -48,7 +52,7 @@
         <div class="circle3"></div>
       </section>
 
-      <section class="echipa">
+      <section id="members" class="echipa">
         <div class="banner">
           <img src="echipa.png" alt="echipa" class="banner-image" />
           <h3>ÎNTÂLNEȘTE ECHIPA</h3>
@@ -139,7 +143,7 @@
 
       
 
-      <section class="club">
+      <section id="cluburi" class="club">
         <div class="container3">
           <div class="circle5"></div>
           <div class="text-content1">
@@ -187,12 +191,12 @@
         <div class="circle8"></div>
       </section>
 
-      <section class="evenimente">
+      <section id="evenimente" class="evenimente">
         <h2 class="section-title">Evenimente viitoare</h2>
         <ul class="list"></ul>
         <div class="swipe"></div>
       </section>
-      
+      <section id="calendar">
       <div id="calendar-container">
         <div class="calendar-header">
           <button id="prev-month" class="calendar-nav-btn">&lt;</button>
@@ -216,7 +220,7 @@
         </div>
       </div>
       <div id="debug-info" style="color: red;"></div>
-
+</section>
 
       <footer class="footer">
         <div class="footer-left">
