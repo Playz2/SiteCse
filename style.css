@@ -58,7 +58,7 @@ section {
   text-decoration: none;
   position: relative;
   transition: color 0.3s ease;
-  margin-right: 20px;
+  margin-right: 60px;
 }
 
 .nav-link::after {
