@@ -58,7 +58,7 @@ async function fetchSheetDataAlternative() {
         const response = await fetch(jsonUrl);
         const data = await response.json();
         
-        // Process the JSON response
+        
         return data.feed.entry.map(entry => ({
             Nume: entry.gsx$nume?.$t || 'Titlu lipsă',
             Data: entry.gsx$data?.$t || 'Dată necunoscută',
@@ -133,7 +133,6 @@ function next() {
     $(".new-next").classList.add("next");
     $(".new-next").classList.remove("new-next");
     
-    // Add new "next" card
     const newNextIndex = (currentIndex + 2) % eventData.length;
     const newNextEvent = eventData[newNextIndex];
     const newNextCard = buildEventCard(newNextEvent, 'new-next');
