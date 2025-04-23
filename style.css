@@ -1788,7 +1788,120 @@
     font-size: 16px;
     color: #0f0f0f;
   }
-
+  /* Suggetion */
+  .sugestii {
+    padding: 60px 20px;
+    max-width: 90%;
+    background-color: #a3f9ff;
+    position: relative;
+    margin: 40px auto;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .sugestii-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+  
+  .sugestii .sugestii-titlu {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 2.5rem;
+  }
+  
+  .sugestii-intro {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #302f2f;
+    margin-bottom: 40px;
+    padding: 0 15px;
+  }
+  
+  .sugestii-form {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    box-sizing: border-box; /* Important for responsive design */
+  }
+  
+  .form-group textarea {
+    height: 150px;
+    resize: vertical;
+  }
+  
+  .submit-btn {
+    background-color: #519CED;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .submit-btn:hover {
+    background-color: #3983c7;
+    transform: scale(1.05);
+  }
+  
+  .succes-message,
+  .error-message {
+    padding: 12px;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+    margin-top: 20px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .success-message {
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+  }
+  
+  .error-message {
+    background-color: #f2dede;
+    color: #a94442;
+    border: 1px solid #ebccd1;
+  }
+/* Footer */
   .footer {
     background-image: url("footer1.png");
     background-size: cover;
@@ -2640,6 +2753,17 @@
       height: 40px;
       font-size: 14px;
     }
+    .sugestii {
+      padding: 40px 15px;
+    }
+    
+    .suggestion-form {
+      padding: 20px;
+    }
+    
+    .sugestii .section-title {
+      font-size: 2rem;
+    }
     
     /* Footer */
     .footer {
@@ -3154,6 +3278,14 @@
     
     .footer-center h4 {
       font-size: 28px;
+    }
+    .form-group input,
+    .form-group textarea {
+      font-size: 16px;
+    }
+    
+    .submit-btn {
+      width: 100%;
     }
   }
 

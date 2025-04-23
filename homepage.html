@@ -231,6 +231,35 @@
       <div id="debug-info" style="color: red;"></div>
 </section>
 
+  <section id="sugestii" class="sugestii fade-in">
+        <div class="sugestii-container">
+          <h2 class="sugestii-titlu">Sugestii si feedback</h2>
+          <p class="sugestii-intro">Ai idei pentru imbunatatirea activitati consiliului</p>
+         
+          <form id="sugestionform" class="sugestion-form">
+            <div class="form-group">
+              <label for="name">Nume:</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+
+          
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="text" id="email" name="email" required>  
+        </div>
+
+        <div class="form-group">
+          <label for="suggestion">Sugestie:</label>
+          <textarea id="suggestion" name="message" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Trimite sugestia</button>
+      </form>
+      <p id="succesMessage" class="succes-message">Multumim! Sugestia ta a fost trimisa cu succes.</p>
+      <p id="errorMessage" class="error-message">Ne pare rau, a aparut o eroare. Te rog sa incerci din nou.</p>
+    </div>
+    </section>
+
       <footer class="footer fade-in">
         <div class="footer-left">
           <img src="314709874_848509063084706_779049845709128952_n.jpg" alt="Liceul Teoretic Tudor Arghezi Logo" class="footer-logo">
@@ -272,6 +301,8 @@
     <script src="calendar.js"></script>
     <script src="hamburger.js"></script>
     <script src="fadein.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="suggestion.js"></script>
 
 </body>
 </html>
