@@ -1,7 +1,6 @@
 const calendarSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQNbB5nPbBjGHMg7nLGiW0JFnoQlbYuiMnVFZ90ATa3dFfI2qZaSTrNbnRjo6cqn-xmQ8JpODbcbn_g/pubhtml";
 const qs = selector => document.querySelector(selector);
 
-// **Remove the old sample eventData declaration here**
 
 async function fetchCalendarSheetData() {
     try {
@@ -33,12 +32,11 @@ async function fetchCalendarSheetData() {
     }
 }
 
-// Global variables for calendar
 let currentDate = new Date();
 let currentMonth = currentDate.getMonth();
 let currentYear = currentDate.getFullYear();
 
-// Helper function to convert month names to numbers
+
 function getRomanianMonthNumber(monthName) {
     const months = {
         'ianuarie': '01',
@@ -55,21 +53,21 @@ function getRomanianMonthNumber(monthName) {
         'decembrie': '12'
     };
 
-    return months[monthName.toLowerCase()] || '01'; // Default to January if not found
+    return months[monthName.toLowerCase()] || '01';
 }
 
-// Calendar initialization function
+
 function initCalendar() {
     renderCalendar();
     setupCalendarEventListeners();
 
-    // Once we have event data, highlight the dates
+
     if (eventData && eventData.length > 0) {
         highlightEventDates();
     }
 }
 
-// Render the calendar structure
+
 function renderCalendar() {
     const monthNames = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 
                        'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
@@ -77,24 +75,23 @@ function renderCalendar() {
     // Update header
     document.getElementById('calendar-month-year').textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
-    // Get days container
     const daysContainer = document.getElementById('calendar-days');
     daysContainer.innerHTML = '';
 
-    // Get first day of month (0 = Sunday, 1 = Monday, etc.)
+
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
 
-    // Get number of days in month
+
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    // Add empty cells for days before the first day of month
+  
     for (let i = 0; i < firstDay; i++) {
         const emptyCell = document.createElement('div');
         emptyCell.className = 'day empty';
         daysContainer.appendChild(emptyCell);
     }
 
-    // Add cells for each day of the month
+
     for (let day = 1; day <= daysInMonth; day++) {
         const dayCell = document.createElement('div');
         dayCell.className = 'day';
@@ -104,7 +101,7 @@ function renderCalendar() {
     }
 }
 
-// Setup event listeners for calendar navigation and day selection
+
 function setupCalendarEventListeners() {
     document.getElementById('prev-month').addEventListener('click', () => {
         currentMonth--;
