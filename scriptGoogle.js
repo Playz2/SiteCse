@@ -1,6 +1,6 @@
 
 
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQNbB5nPbBjGHMg7nLGiW0JFnoQlbYuiMnVFZ90ATa3dFfI2qZaSTrNbnRjo6cqn-xmQ8JpODbcbn_g/pubhtml";
+const sheetURL = "https://docs.google.com/spreadsheets/d/1r83mpJYqoVUZihEidyeq_HfNaQyLH9Nf90yM2dAuEqI/edit?usp=sharing";
 
 const $ = selector => document.querySelector(selector);
 
