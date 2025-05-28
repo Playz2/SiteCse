@@ -7,14 +7,10 @@ let currentIndex = 0;
 
 async function fetchSheetData() {
     try {
+        // Add cache busting parameter
         const cacheBuster = new Date().getTime();
         const response = await fetch(`${sheetURL}&cachebust=${cacheBuster}`, {
-            cache: 'no-cache',
-            headers: {
-                'Cache-Control': 'no-cache, no-store, must-revalidate',
-                'Pragma': 'no-cache',
-                'Expires': '0'
-            }
+            cache: 'no-cache'
         });
         const html = await response.text();
         
@@ -43,24 +39,19 @@ async function fetchSheetData() {
         return [];
     }
 }
-
-async function fetchSheetDataAlternative() {
-    const sheetId = sheetURL.match(/[-\w]{25,}/)?.[0] || '';
+async function fetchSheetDataAlternative() {  // Add this function declaration
+    const sheetId = "1r83mpJYqoVUZihEidyeq_HfNaQyLH9Nf90yM2dAuEqI";
     if (!sheetId) {
         console.error('Could not extract sheet ID from URL');
         return [];
     }
     
     try {
+        // Add cache busting parameter
         const cacheBuster = new Date().getTime();
         const jsonUrl = `https://spreadsheets.google.com/feeds/list/${sheetId}/1/public/values?alt=json&cachebust=${cacheBuster}`;
         const response = await fetch(jsonUrl, {
-            cache: 'no-cache',
-            headers: {
-                'Cache-Control': 'no-cache, no-store, must-revalidate',
-                'Pragma': 'no-cache',
-                'Expires': '0'
-            }
+            cache: 'no-cache'
         });
         const data = await response.json();
         
@@ -75,6 +66,97 @@ async function fetchSheetDataAlternative() {
         return [];
     }
 }
+async function fetchSheetDataCSV() {
+    const sheetId = "1r83mpJYqoVUZihEidyeq_HfNaQyLH9Nf90yM2dAuEqI";
+    if (!sheetId) {
+        console.error('Could not extract sheet ID from URL');
+        return [];
+    }
+    
+    try {
+        const cacheBuster = new Date().getTime();
+        const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0&cachebust=${cacheBuster}`;
+        const response = await fetch(csvUrl, {
+            cache: 'no-cache'
+        });
+        const csvText = await response.text();
+        
+        // Split into lines while preserving newlines within quoted fields
+        const lines = csvText.split(/\r?\n(?=(?:[^"]*"[^"]*")*[^"]*$)/).filter(line => line.trim());
+        const headers = parseCSVLine(lines[0]);
+        
+        console.log('CSV Headers:', headers);
+        console.log('Raw CSV text:', csvText); // Debug line
+        
+        const events = [];
+        for (let i = 1; i < lines.length; i++) {
+            const values = parseCSVLine(lines[i]);
+            console.log('Parsed line:', values); // Debug line
+            if (values.length >= 4 && values[0]) {
+                events.push({
+                    Nume: values[0] || 'Titlu lipsă',
+                    Data: values[1] || 'Dată necunoscută',
+                    Locatie: values[2] || 'Locație necunoscută',
+                    Descriere: values[3] || 'Fără descriere'
+                });
+            }
+        }
+        
+        console.log('Parsed events:', events);
+        return events;
+    } catch (error) {
+        console.error('Error fetching CSV data:', error);
+        return [];
+    }
+}
+
+// Add this helper function to properly parse CSV lines with quotes
+function parseCSVLine(line) {
+    const results = [];
+    let field = '';
+    let inQuotes = false;
+    
+    for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        
+        if (char === '"') {
+            if (i + 1 < line.length && line[i + 1] === '"') {
+                // Handle escaped quotes
+                field += '"';
+                i++; // Skip next quote
+            } else {
+                // Toggle quote mode
+                inQuotes = !inQuotes;
+                continue; // Skip the quote character
+            }
+        } else if (char === ',' && !inQuotes) {
+            // End of field
+            results.push(field.trim());
+            field = '';
+        } else if (char === '\n' && !inQuotes) {
+            // Handle newlines outside quotes
+            results.push(field.trim());
+            field = '';
+        } else {
+            // Add character to current field
+            field += char;
+        }
+    }
+    
+    // Add the last field
+    if (field) {
+        results.push(field.trim());
+    }
+    
+    // Clean up any remaining quotes at the start/end of fields
+    return results.map(field => {
+        if (field.startsWith('"') && field.endsWith('"')) {
+            return field.slice(1, -1).trim();
+        }
+        return field.trim();
+    });
+}
+
 
 function buildEventCard(event, position) {
     const li = document.createElement('li');
@@ -118,57 +200,89 @@ function initializeCarousel() {
 function next() {
     if (eventData.length <= 1) return;
     
-    currentIndex = (currentIndex + 1) % eventData.length;
-    
-    if ($(".hide")) $(".hide").remove();
-    
-    if ($(".prev")) {
-        $(".prev").classList.add("hide");
-        $(".prev").classList.remove("prev");
+    const listElement = $(".list");
+    if (!listElement) {
+        console.error("List element not found");
+        return;
     }
     
-    $(".act").classList.add("prev");
-    $(".act").classList.remove("act");
+    currentIndex = (currentIndex + 1) % eventData.length;
     
-    $(".next").classList.add("act");
-    $(".next").classList.remove("next");
+    const hideElement = $(".hide");
+    if (hideElement) hideElement.remove();
     
-    $(".new-next").classList.add("next");
-    $(".new-next").classList.remove("new-next");
+    const prevElement = $(".prev");
+    if (prevElement) {
+        prevElement.classList.add("hide");
+        prevElement.classList.remove("prev");
+    }
+    
+    const actElement = $(".act");
+    if (actElement) {
+        actElement.classList.add("prev");
+        actElement.classList.remove("act");
+    }
+    
+    const nextElement = $(".next");
+    if (nextElement) {
+        nextElement.classList.add("act");
+        nextElement.classList.remove("next");
+    }
+    
+    const newNextElement = $(".new-next");
+    if (newNextElement) {
+        newNextElement.classList.add("next");
+        newNextElement.classList.remove("new-next");
+    }
     
     const newNextIndex = (currentIndex + 2) % eventData.length;
     const newNextEvent = eventData[newNextIndex];
     const newNextCard = buildEventCard(newNextEvent, 'new-next');
-    $(".list").appendChild(newNextCard);
+    listElement.appendChild(newNextCard);
 }
 
 function prev() {
     if (eventData.length <= 1) return;
     
-    currentIndex = (currentIndex - 1 + eventData.length) % eventData.length;
-    
-    if ($(".new-next")) $(".new-next").remove();
-    
-    if ($(".next")) {
-        $(".next").classList.add("new-next");
-        $(".next").classList.remove("next");
+    const listElement = $(".list");
+    if (!listElement) {
+        console.error("List element not found");
+        return;
     }
     
-    $(".act").classList.add("next");
-    $(".act").classList.remove("act");
+    currentIndex = (currentIndex - 1 + eventData.length) % eventData.length;
     
-    $(".prev").classList.add("act");
-    $(".prev").classList.remove("prev");
+    const newNextElement = $(".new-next");
+    if (newNextElement) newNextElement.remove();
     
-    if ($(".hide")) {
-        $(".hide").classList.add("prev");
-        $(".hide").classList.remove("hide");
+    const nextElement = $(".next");
+    if (nextElement) {
+        nextElement.classList.add("new-next");
+        nextElement.classList.remove("next");
+    }
+    
+    const actElement = $(".act");
+    if (actElement) {
+        actElement.classList.add("next");
+        actElement.classList.remove("act");
+    }
+    
+    const prevElement = $(".prev");
+    if (prevElement) {
+        prevElement.classList.add("act");
+        prevElement.classList.remove("prev");
+    }
+    
+    const hideElement = $(".hide");
+    if (hideElement) {
+        hideElement.classList.add("prev");
+        hideElement.classList.remove("hide");
     }
     
     const newPrevIndex = (currentIndex - 1 + eventData.length) % eventData.length;
     const newPrevEvent = eventData[newPrevIndex];
     const newPrevCard = buildEventCard(newPrevEvent, 'hide');
-    $(".list").insertBefore(newPrevCard, $(".list").firstChild);
+    listElement.insertBefore(newPrevCard, listElement.firstChild);
 }
 
 function slide(el) {
@@ -179,19 +293,29 @@ function slide(el) {
 function setupEventListeners() {
     const swipeArea = $(".swipe");
     
-    let startX, endX;
-    swipeArea.addEventListener('touchstart', e => {
-        startX = e.touches[0].clientX;
-    });
-    
-    swipeArea.addEventListener('touchend', e => {
-        endX = e.changedTouches[0].clientX;
-        handleSwipe();
-    });
+    if (swipeArea) {
+        let startX, endX;
+        swipeArea.addEventListener('touchstart', e => {
+            startX = e.touches[0].clientX;
+        });
+        
+        swipeArea.addEventListener('touchend', e => {
+            endX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+    }
     
     document.addEventListener('click', e => {
-        if (e.target.closest('.prev')) prev();
-        if (e.target.closest('.next')) next();
+        const prevElement = e.target.closest('.prev');
+        const nextElement = e.target.closest('.next');
+        
+        if (prevElement) {
+            e.preventDefault();
+            prev();
+        } else if (nextElement) {
+            e.preventDefault();
+            next();
+        }
     });
     
     function handleSwipe() {
@@ -209,10 +333,26 @@ async function init() {
         // Clear any existing data
         eventData = [];
         
-        // Try to fetch fresh data
-        eventData = await fetchSheetData();
+        console.log('Starting initialization...');
+        
+        // Check if required DOM elements exist
+        const listElement = $('.list');
+        if (!listElement) {
+            console.error('Required .list element not found in DOM');
+            return;
+        }
+        
+        // Try to fetch fresh data using different methods
+        console.log('Trying CSV method first...');
+        eventData = await fetchSheetDataCSV();
         
         if (eventData.length === 0) {
+            console.log('CSV method failed, trying HTML method...');
+            eventData = await fetchSheetData();
+        }
+        
+        if (eventData.length === 0) {
+            console.log('HTML method failed, trying JSON feed method...');
             eventData = await fetchSheetDataAlternative();
         }
         
@@ -243,12 +383,17 @@ async function init() {
             ];
         }
         
+        console.log('Initializing carousel with', eventData.length, 'events');
         initializeCarousel();
         setupEventListeners();
+        console.log('Initialization complete');
         
     } catch (error) {
         console.error('Error initializing carousel:', error);
-        $('.list').innerHTML = '<li class="act"><p>A apărut o eroare la încărcarea evenimentelor.</p></li>';
+        const listElement = $('.list');
+        if (listElement) {
+            listElement.innerHTML = '<li class="act"><p>A apărut o eroare la încărcarea evenimentelor.</p></li>';
+        }
     }
 }
 
