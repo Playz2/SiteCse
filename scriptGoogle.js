@@ -1,23 +1,25 @@
-
-
 const sheetURL = "https://docs.google.com/spreadsheets/d/1r83mpJYqoVUZihEidyeq_HfNaQyLH9Nf90yM2dAuEqI/edit?usp=sharing";
 
 const $ = selector => document.querySelector(selector);
 
-
 let eventData = [];
 let currentIndex = 0;
 
-
 async function fetchSheetData() {
     try {
-        const response = await fetch(sheetURL);
+        const cacheBuster = new Date().getTime();
+        const response = await fetch(`${sheetURL}&cachebust=${cacheBuster}`, {
+            cache: 'no-cache',
+            headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            }
+        });
         const html = await response.text();
-        
         
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-        
         
         const table = doc.querySelector('table');
         if (!table) {
@@ -27,7 +29,6 @@ async function fetchSheetData() {
         
         const rows = Array.from(table.querySelectorAll('tr')).slice(1);
         
-       
         return rows.map(row => {
             const cells = row.querySelectorAll('td');
             return {
@@ -43,9 +44,7 @@ async function fetchSheetData() {
     }
 }
 
-
 async function fetchSheetDataAlternative() {
-    
     const sheetId = sheetURL.match(/[-\w]{25,}/)?.[0] || '';
     if (!sheetId) {
         console.error('Could not extract sheet ID from URL');
@@ -53,11 +52,17 @@ async function fetchSheetDataAlternative() {
     }
     
     try {
-     
-        const jsonUrl = `https://spreadsheets.google.com/feeds/list/${sheetId}/1/public/values?alt=json`;
-        const response = await fetch(jsonUrl);
+        const cacheBuster = new Date().getTime();
+        const jsonUrl = `https://spreadsheets.google.com/feeds/list/${sheetId}/1/public/values?alt=json&cachebust=${cacheBuster}`;
+        const response = await fetch(jsonUrl, {
+            cache: 'no-cache',
+            headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            }
+        });
         const data = await response.json();
-        
         
         return data.feed.entry.map(entry => ({
             Nume: entry.gsx$nume?.$t || 'Titlu lipsă',
@@ -94,7 +99,6 @@ function initializeCarousel() {
         return;
     }
     
-   
     const positions = ['prev', 'act', 'next'];
     
     for (let i = 0; i < Math.min(3, eventData.length); i++) {
@@ -104,7 +108,6 @@ function initializeCarousel() {
         list.appendChild(card);
     }
     
-  
     if (eventData.length > 3) {
         const hiddenEvent = eventData[(currentIndex + 3) % eventData.length];
         const hiddenCard = buildEventCard(hiddenEvent, 'new-next');
@@ -162,7 +165,6 @@ function prev() {
         $(".hide").classList.remove("hide");
     }
     
-   
     const newPrevIndex = (currentIndex - 1 + eventData.length) % eventData.length;
     const newPrevEvent = eventData[newPrevIndex];
     const newPrevCard = buildEventCard(newPrevEvent, 'hide');
@@ -174,11 +176,9 @@ function slide(el) {
     else if (el.classList.contains("prev")) prev();
 }
 
-
 function setupEventListeners() {
     const swipeArea = $(".swipe");
     
-   
     let startX, endX;
     swipeArea.addEventListener('touchstart', e => {
         startX = e.touches[0].clientX;
@@ -188,7 +188,6 @@ function setupEventListeners() {
         endX = e.changedTouches[0].clientX;
         handleSwipe();
     });
-    
     
     document.addEventListener('click', e => {
         if (e.target.closest('.prev')) prev();
@@ -205,18 +204,21 @@ function setupEventListeners() {
     }
 }
 
-
 async function init() {
     try {
-      
-        eventData = await fetchSheetData();
+        // Clear any existing data
+        eventData = [];
         
+        // Try to fetch fresh data
+        eventData = await fetchSheetData();
         
         if (eventData.length === 0) {
             eventData = await fetchSheetDataAlternative();
         }
         
-       
+        // Log the fetched data for debugging
+        console.log('Fetched event data:', eventData);
+        
         if (eventData.length === 0) {
             console.warn('Could not fetch data from Google Sheet. Using placeholder data instead.');
             eventData = [
@@ -249,6 +251,5 @@ async function init() {
         $('.list').innerHTML = '<li class="act"><p>A apărut o eroare la încărcarea evenimentelor.</p></li>';
     }
 }
-
 
 document.addEventListener('DOMContentLoaded', init);
